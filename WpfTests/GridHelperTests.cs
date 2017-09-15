@@ -10,26 +10,38 @@ namespace WpfTests
     public class GridHelperTests
     {
         [TestMethod]
-        public void GetRowDefinitionsTest()
+        public void GetDefinitionsTest()
         {
             string xaml = "<Grid xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\">";
 
-            GridLength[] lengths = new GridLength[]
+            GridLength[] widths = new GridLength[]
             {
                 GridLength.Auto, new GridLength(25), new GridLength(10,GridUnitType.Star)
             };
 
-            string output = Weniger.WPF.XamlHelpers.GridHelper.GetRowDefinitions(lengths);
+            GridLength[] heights = new GridLength[]
+            {
+                new GridLength(0,GridUnitType.Star),GridLength.Auto, new GridLength(25),new GridLength(7,GridUnitType.Pixel)
+            };
+ 
+            string rows = Weniger.WPF.XamlHelpers.GridHelper.GetDefinitions(true, heights);
+            string columns = Weniger.WPF.XamlHelpers.GridHelper.GetDefinitions(false,widths);
 
-            xaml = xaml + output + "</Grid>";
+            xaml = xaml + columns +Environment.NewLine + rows + Environment.NewLine + "</Grid>";
 
             Grid res = XamlServices.Parse(xaml) as Grid;
 
-            Assert.AreEqual(res.ColumnDefinitions.Count, 3);
+            Assert.AreEqual(res.ColumnDefinitions.Count, widths.Length);
+            Assert.AreEqual(res.RowDefinitions.Count, heights.Length);
 
-            for(int i=0;i<res.ColumnDefinitions.Count;i++)
+            for (int i=0;i<res.ColumnDefinitions.Count;i++)
             {
-                Assert.AreEqual(res.ColumnDefinitions[i].Width, lengths[i]);
+                Assert.AreEqual(res.ColumnDefinitions[i].Width, widths[i]);
+            }
+
+            for (int i = 0; i < res.RowDefinitions.Count; i++)
+            {
+                Assert.AreEqual(res.RowDefinitions[i].Height, heights[i]);
             }
         }
     }
