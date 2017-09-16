@@ -13,5 +13,7 @@ namespace Weniger.UiServices
         public int Id { get; set; }
 
         public IGroup Parent { get; set; }
+
+        public event EventHandler Activated;
     }
 }

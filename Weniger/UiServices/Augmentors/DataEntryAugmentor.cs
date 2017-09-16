@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Weniger.UiServices
+namespace Weniger.UiServices.Augmentors
 {
     public abstract class DataEntryAugmentor : Augmentor, ISaveAugmentor
     {

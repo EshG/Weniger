@@ -14,7 +14,6 @@ namespace Weniger.UiServices
 
         /// <summary>
         /// The group of which this item is part of. 
-        /// a group may affect the positioning and the appreance of an item depending on the Augmentor
         /// </summary>
         public Group Group { get; set; }
     }

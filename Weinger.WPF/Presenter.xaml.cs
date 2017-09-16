@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Weniger.UiServices;
+using Weniger.UiServices.Augmentors;
 
 namespace Weniger.WPF
 {
@@ -49,15 +50,15 @@ namespace Weniger.WPF
             return context;
         }
 
-        public IList<Weniger.UiServices.Augmentor> Augmentors
+        public IList<Augmentor> Augmentors
         {
-            get { return (IList<Weniger.UiServices.Augmentor>)GetValue(AugmentorsProperty); }
+            get { return (IList<Augmentor>)GetValue(AugmentorsProperty); }
             set { SetValue(AugmentorsProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Augmentors.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty AugmentorsProperty =
-            DependencyProperty.Register("Augmentors", typeof(IList<Weniger.UiServices.Augmentor>), typeof(Presenter), new PropertyMetadata(AugmentorsChanged));
+            DependencyProperty.Register("Augmentors", typeof(IList<Augmentor>), typeof(Presenter), new PropertyMetadata(AugmentorsChanged));
 
         private static void AugmentorsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

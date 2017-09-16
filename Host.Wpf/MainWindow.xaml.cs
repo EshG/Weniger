@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
+using Weniger.UiServices.Augmentors;
 namespace Host.Wpf
 {
     /// <summary>
@@ -27,9 +15,9 @@ namespace Host.Wpf
             presenter.Augmentors = GetAugmentors();
         }
 
-        private List<Weniger.UiServices.Augmentor> GetAugmentors()
+        private List<Augmentor> GetAugmentors()
         {
-            return new List<Weniger.UiServices.Augmentor>() {new Augmentors.CustomerCardAugmentor(336) };
+            return new List<Augmentor>() {new Augmentors.CustomerCardAugmentor(336) };
         }
     }
 }

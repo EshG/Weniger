@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Threading.Tasks;
 using Weniger.UiServices;
+using Weniger.UiServices.Augmentors;
 
 namespace Host.Wpf.Augmentors
 {
