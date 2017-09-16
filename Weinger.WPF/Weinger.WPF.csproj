@@ -47,7 +47,15 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="XamlHelpers\GridHelper.cs" />
+    <Compile Include="Xaml\Controls\ControlSelector.cs" />
+    <Compile Include="Xaml\Controls\Date.cs" />
+    <Compile Include="Xaml\GridBuilder.cs" />
+    <Compile Include="Xaml\IFrameworkElement.cs" />
+    <Compile Include="Xaml\IPanel.cs" />
+    <Compile Include="Xaml\SharedProperties.cs" />
+    <Compile Include="Xaml\Controls\Text.cs" />
+    <Compile Include="Xaml\Controls\IControlGenerator.cs" />
+    <Compile Include="Xaml\StackPanelBuilder.cs" />
     <Page Include="Presenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

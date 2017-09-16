@@ -7,8 +7,10 @@ using System.Windows.Controls;
 namespace WpfTests
 {
     [TestClass]
-    public class GridHelperTests
+    public class GridBuilderTests
     {
+
+
         [TestMethod]
         public void GetDefinitionsTest()
         {
@@ -24,8 +26,8 @@ namespace WpfTests
                 new GridLength(0,GridUnitType.Star),GridLength.Auto, new GridLength(25),new GridLength(7,GridUnitType.Pixel)
             };
  
-            string rows = Weniger.WPF.XamlHelpers.GridHelper.GetDefinitions(true, heights);
-            string columns = Weniger.WPF.XamlHelpers.GridHelper.GetDefinitions(false,widths);
+            string rows = Weniger.WPF.Xaml.GridBuilder.GetDefinitions(true, heights);
+            string columns = Weniger.WPF.Xaml.GridBuilder.GetDefinitions(false,widths);
 
             xaml = xaml + columns +Environment.NewLine + rows + Environment.NewLine + "</Grid>";
 

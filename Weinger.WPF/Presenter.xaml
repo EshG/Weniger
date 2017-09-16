@@ -6,9 +6,7 @@
              xmlns:local="clr-namespace:Weniger.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0" />
-        </Grid.ColumnDefinitions> 
+    <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+       
     </Grid>
 </UserControl>
