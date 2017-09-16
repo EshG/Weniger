@@ -13,6 +13,7 @@ namespace Host.Wpf.Augmentors
         {
             using (Data.AdventureWorksLTEntities1 context = new Data.AdventureWorksLTEntities1())
             {
+                context.Configuration.LazyLoadingEnabled = false;
                 customer = context.Customers.Where(c => c.CustomerID == userId).FirstOrDefault();
             }
         }

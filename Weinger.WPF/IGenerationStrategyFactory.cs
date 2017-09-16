@@ -5,6 +5,6 @@ namespace Weniger.WPF
 {
     internal interface IGenerationStrategyFactory
     {
-        Task<string> GetXaml(Augmentor augmentor);
+        Task<string> GetXamlAsync(Augmentor augmentor);
     }
 }

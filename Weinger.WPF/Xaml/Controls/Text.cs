@@ -29,7 +29,7 @@ namespace Weniger.WPF.Xaml.Controls
 
         public static string GetXaml(object value, Dictionary<string, string> attachedProperties)
         {
-            return $"<TextBox Content=\"{value}\" {SharedProperties.ToPropertiesSetters(attachedProperties)} />";
+            return $"<TextBox Text=\"{value}\" {SharedProperties.ToPropertiesSetters(attachedProperties)} />";
         }
     }
 }

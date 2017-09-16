@@ -14,7 +14,7 @@ namespace Weniger.WPF.Factories
         IXamlFactory dataFormFactory = new DataEntryFormFactory();
         IXamlFactory propertyGridFactory = new PropertyGridFactory();
 
-        public async Task<string> GetXaml(Augmentor augmentor)
+        public async Task<string> GetXamlAsync(Augmentor augmentor)
         {
             _userItems = await augmentor.OnOutput();
 

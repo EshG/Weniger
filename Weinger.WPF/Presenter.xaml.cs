@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -21,14 +24,30 @@ namespace Weniger.WPF
     /// </summary>
     public partial class Presenter : UserControl
     {
-        IList<Weniger.UiServices.Augmentor> _Augmentors;
+        ParserContext _parserContext;
 
         public Presenter()
         {
             InitializeComponent();
+
+            _parserContext = GetParserContext();
+
         }
 
+        private ParserContext GetParserContext()
+        {
+            ParserContext context = new ParserContext();
+            var applicationDirectory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var resourcesDirectory = System.IO.Path.Combine(applicationDirectory, "Resources");
 
+            context.BaseUri = new Uri(resourcesDirectory, UriKind.Absolute);
+
+            context.XmlnsDictionary.Add("", "http://schemas.microsoft.com/winfx/2006/xaml/presentation");
+            context.XmlnsDictionary.Add("x", "http://schemas.microsoft.com/winfx/2006/xaml");
+            context.XmlnsDictionary.Add("x:Class", this.GetType().FullName);
+
+            return context;
+        }
 
         public IList<Weniger.UiServices.Augmentor> Augmentors
         {
@@ -43,15 +62,32 @@ namespace Weniger.WPF
         private static void AugmentorsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Presenter presenter = (Presenter)d;
-            presenter.Refresh();
+            presenter.RefreshAsync();
         }
 
 
-        public void Refresh()
+        public async void RefreshAsync()
         {
-            foreach(Augmentor aug in Augmentors)
+            AugmentorsProcessor processor = new AugmentorsProcessor();
+            string xaml = await processor.Process(Augmentors);
+            rootContent.Content = GetRootObject(xaml);
+        }
+
+
+        private DependencyObject GetRootObject(string xaml)
+        {
+            System.IO.StringReader reader = new System.IO.StringReader(xaml);
+
+            using (MemoryStream ms = new MemoryStream())
             {
-                
+                StreamWriter writer = new StreamWriter(ms);
+                writer.Write(xaml);
+                writer.Flush();
+                ms.Position = 0;
+
+                DependencyObject rootObject = XamlReader.Load(ms, _parserContext) as DependencyObject;
+
+                return rootObject;
             }
         }
     }

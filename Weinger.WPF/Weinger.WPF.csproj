@@ -47,6 +47,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AugmentorsProcessor.cs" />
     <Compile Include="Xaml\Controls\ControlSelector.cs" />
     <Compile Include="Xaml\Controls\Date.cs" />
     <Compile Include="Xaml\GridBuilder.cs" />
@@ -60,10 +61,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl1.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="Factories\DataEntryFactory.cs" />
     <Compile Include="Factories\DataEntryFormFactory.cs" />
     <Compile Include="Factories\PropertyGridFactory.cs" />
@@ -71,10 +68,6 @@
     <Compile Include="IXamlFactory.cs" />
     <Compile Include="Presenter.xaml.cs">
       <DependentUpon>Presenter.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +98,9 @@
       <Project>{942baa1b-bd60-4072-b6c7-d07028243656}</Project>
       <Name>Weniger</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
