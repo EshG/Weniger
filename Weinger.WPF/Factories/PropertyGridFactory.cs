@@ -4,9 +4,9 @@ using Weniger.UiServices;
 
 namespace Weniger.WPF.Factories
 {
-    internal class PropertyGridFactory : IXamlFactory
+    internal class PropertyGridFactory : IViewFactory
     {
-        public Task<string> GetXaml(UserItem[] items)
+        public Task<ViewData> GetViewData(UserItem[] items)
         {
             throw new NotImplementedException();
         }

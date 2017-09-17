@@ -64,8 +64,8 @@
     <Compile Include="Factories\DataEntryFactory.cs" />
     <Compile Include="Factories\DataEntryFormFactory.cs" />
     <Compile Include="Factories\PropertyGridFactory.cs" />
-    <Compile Include="IGenerationStrategyFactory.cs" />
-    <Compile Include="IXamlFactory.cs" />
+    <Compile Include="IViewFactorySelector.cs" />
+    <Compile Include="IViewFactory.cs" />
     <Compile Include="Presenter.xaml.cs">
       <DependentUpon>Presenter.xaml</DependentUpon>
     </Compile>
@@ -94,13 +94,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Weniger\Weniger.csproj">
       <Project>{942baa1b-bd60-4072-b6c7-d07028243656}</Project>
       <Name>Weniger</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

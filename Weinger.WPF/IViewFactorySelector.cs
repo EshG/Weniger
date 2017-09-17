@@ -4,8 +4,8 @@ using Weniger.UiServices.Augmentors;
 
 namespace Weniger.WPF
 {
-    internal interface IGenerationStrategyFactory
+    internal interface IViewFactorySelector
     {
-        Task<string> GetXamlAsync(Augmentor augmentor);
+        Task<IViewFactory> GetViewFactory(Augmentor augmentor);
     }
 }

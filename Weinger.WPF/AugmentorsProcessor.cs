@@ -17,22 +17,25 @@ namespace Weniger.WPF
             
             foreach(Augmentor aug in Augmentors)
             {
-                Task<string> res = GetGenerator(aug).GetXamlAsync(aug);
-                await res;
+                IViewFactory viewFactory = await GetSelector(aug).GetViewFactory(aug);
 
+                Task<UserItem[]> res = aug.OnOutput();
+                await res;
                 if(res.IsFaulted)
                 {
                     //TODO Handle user error
                     Debug.WriteLine(res.Exception.ToString());
                 }
 
-                sb.Append(res.Result);
+                ViewData viewData = await viewFactory.GetViewData(await aug.OnOutput());
+                
+                sb.Append(viewData.Xaml);
             }
 
             return await Task.FromResult(sb.ToString());
         }
 
-        private IGenerationStrategyFactory GetGenerator(Augmentor aug)
+        private IViewFactorySelector GetSelector(Augmentor aug)
         {
             if (aug is DataEntryAugmentor)
             {

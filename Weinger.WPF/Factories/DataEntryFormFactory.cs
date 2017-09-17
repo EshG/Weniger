@@ -3,31 +3,45 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Weniger.UiServices;
 using Weniger.WPF.Xaml;
+using System.Linq;
 
 namespace Weniger.WPF.Factories
 {
-    internal class DataEntryFormFactory : IXamlFactory
+    internal class DataEntryFormFactory : IViewFactory
     {
         const int SPLIT_THRESHOLD = 5;
         
-        public Task<string> GetXaml(UserItem[] items)
+        public Task<ViewData> GetViewData(UserItem[] items)
         {
+            ViewData viewData = new ViewData();
+
             Stack<UserItem> rightItems = new Stack<UserItem>(items);
 
+            string xaml = null;
+
             if (rightItems.Count <= SPLIT_THRESHOLD)
-                return Task.FromResult(GetForm(rightItems, null));
-
-            List<UserItem> leftItems = new List<UserItem>();
-            leftItems.Capacity = SPLIT_THRESHOLD;
-
-            int counter = 0;
-            while (rightItems.Count > 0 && counter > SPLIT_THRESHOLD)
             {
-                leftItems.Add(rightItems.Pop());
-                counter++;
+                xaml = GetForm(rightItems, null);
+            }
+            else
+            {
+                List<UserItem> leftItems = new List<UserItem>();
+                leftItems.Capacity = SPLIT_THRESHOLD;
+
+                int counter = 0;
+                while (rightItems.Count > 0 && counter > SPLIT_THRESHOLD)
+                {
+                    leftItems.Add(rightItems.Pop());
+                    counter++;
+                }
+
+                xaml = GetForm(leftItems, rightItems);
             }
 
-            return Task.FromResult(GetForm(leftItems, rightItems));
+            viewData.Xaml = xaml;
+            viewData.DataContext = Weniger.UiServices.ViewModels.VMFactory.CreateViewModel(items.OfType<IVmField>());
+
+            return Task.FromResult(viewData);
         }
 
 

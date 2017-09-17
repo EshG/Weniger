@@ -6,16 +6,16 @@ using Weniger.UiServices.Augmentors;
 
 namespace Weniger.WPF.Factories
 {
-    internal class DataEntryFactory : IGenerationStrategyFactory
+    internal class DataEntryFactory : IViewFactorySelector
     {
         const int PROPERTY_GRID_THRESHHOLD = 10; 
 
         private UserItem[] _userItems;
 
-        IXamlFactory dataFormFactory = new DataEntryFormFactory();
-        IXamlFactory propertyGridFactory = new PropertyGridFactory();
+        IViewFactory dataFormFactory = new DataEntryFormFactory();
+        IViewFactory propertyGridFactory = new PropertyGridFactory();
 
-        public async Task<string> GetXamlAsync(Augmentor augmentor)
+        public async Task<IViewFactory> GetViewFactory(Augmentor augmentor)
         {
             _userItems = await augmentor.OnOutput();
 
@@ -24,11 +24,12 @@ namespace Weniger.WPF.Factories
 
             if (_userItems.Length < PROPERTY_GRID_THRESHHOLD)
             {
-                return await dataFormFactory.GetXaml(_userItems);
+                return await Task.FromResult(dataFormFactory);
+                 
             }
             else
             {
-                return await propertyGridFactory.GetXaml(_userItems);
+                return await Task.FromResult(propertyGridFactory);
             }
         }
 
