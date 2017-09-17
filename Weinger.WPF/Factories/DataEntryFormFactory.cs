@@ -10,9 +10,12 @@ namespace Weniger.WPF.Factories
     internal class DataEntryFormFactory : IViewFactory
     {
         const int SPLIT_THRESHOLD = 5;
-        
-        public Task<ViewData> GetViewData(UserItem[] items)
+
+        string _contextKey;
+
+        public Task<ViewData> GetViewData(UserItem[] items,string contextKey)
         {
+            _contextKey = contextKey;
             ViewData viewData = new ViewData();
 
             Stack<UserItem> rightItems = new Stack<UserItem>(items);
@@ -74,8 +77,8 @@ namespace Weniger.WPF.Factories
         //Column
         private string GetColumn(IReadOnlyCollection<UserItem> items,int column)
         {
-            Xaml.GridBuilder gb = new Xaml.GridBuilder(items.Count,2);
-            gb.Properties.Add(SharedProperties.GRID_COLUMN, column.ToString());
+            Xaml.GridBuilder gridBuilder = new Xaml.GridBuilder(items.Count,2);
+            gridBuilder.Properties.Add(SharedProperties.GRID_COLUMN, column.ToString());
             int rowsCounter = 0;
 
             foreach(UserItem item in items)
@@ -83,7 +86,7 @@ namespace Weniger.WPF.Factories
                 string header = ((IHeaderItem)item).Header;
                 object value = ((IValueItem)item).Value;
 
-                gb.Children.Add(Xaml.Controls.TextBlock.GetXaml(header, new Dictionary<string, string>()
+                gridBuilder.Children.Add(Xaml.Controls.TextBlock.GetXaml(header, new Dictionary<string, string>()
                 {
                     {Xaml.SharedProperties.GRID_COLUMN,"0" },
                     { Xaml.SharedProperties.GRID_ROW,rowsCounter.ToString() }
@@ -91,7 +94,7 @@ namespace Weniger.WPF.Factories
 
                 Xaml.Controls.IControlGenerator control = Xaml.Controls.ControlSelector.ForInput(value);
 
-                gb.Children.Add(control.GetXaml(null, value, new Dictionary<string, string>()
+                gridBuilder.Children.Add(control.GetXaml(null, BindingHelper.GetXaml((IVmField)item,_contextKey), new Dictionary<string, string>()
                 {
                     {Xaml.SharedProperties.GRID_COLUMN,"1" },
                     { Xaml.SharedProperties.GRID_ROW,rowsCounter.ToString() }
@@ -100,7 +103,7 @@ namespace Weniger.WPF.Factories
                 rowsCounter++;
             }
 
-            return gb.ToString();
+            return gridBuilder.ToString();
         }
 
 

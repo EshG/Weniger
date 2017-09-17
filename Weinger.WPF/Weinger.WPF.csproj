@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AugmentorsProcessor.cs" />
+    <Compile Include="Xaml\BindingHelper.cs" />
     <Compile Include="Xaml\Controls\ControlSelector.cs" />
     <Compile Include="Xaml\Controls\Date.cs" />
     <Compile Include="Xaml\GridBuilder.cs" />

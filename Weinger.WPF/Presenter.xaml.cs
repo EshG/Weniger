@@ -32,7 +32,7 @@ namespace Weniger.WPF
             InitializeComponent();
 
             _parserContext = GetParserContext();
-
+            DataContext = UiServices.ViewModels.DataContextManager.Instance;
         }
 
         private ParserContext GetParserContext()

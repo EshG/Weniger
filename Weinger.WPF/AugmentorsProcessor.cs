@@ -17,6 +17,8 @@ namespace Weniger.WPF
             
             foreach(Augmentor aug in Augmentors)
             {
+                Guid key = UiServices.ViewModels.DataContextManager.Instance.ReserveKey(aug);
+
                 IViewFactory viewFactory = await GetSelector(aug).GetViewFactory(aug);
 
                 Task<UserItem[]> res = aug.OnOutput();
@@ -27,8 +29,9 @@ namespace Weniger.WPF
                     Debug.WriteLine(res.Exception.ToString());
                 }
 
-                ViewData viewData = await viewFactory.GetViewData(await aug.OnOutput());
-                
+                ViewData viewData = await viewFactory.GetViewData(await aug.OnOutput(),key.ToString());
+
+                UiServices.ViewModels.DataContextManager.Instance.RegisterViewModel(key, viewData.DataContext);
                 sb.Append(viewData.Xaml);
             }
 

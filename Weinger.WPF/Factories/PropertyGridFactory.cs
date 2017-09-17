@@ -6,7 +6,7 @@ namespace Weniger.WPF.Factories
 {
     internal class PropertyGridFactory : IViewFactory
     {
-        public Task<ViewData> GetViewData(UserItem[] items)
+        public Task<ViewData> GetViewData(UserItem[] items, string contextKey)
         {
             throw new NotImplementedException();
         }

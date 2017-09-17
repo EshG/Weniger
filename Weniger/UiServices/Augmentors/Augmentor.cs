@@ -4,8 +4,13 @@ using System.Threading.Tasks;
 
 namespace Weniger.UiServices.Augmentors
 {
-    public abstract class Augmentor
+    public abstract class Augmentor : IDisposable
     {
+        /// <summary>
+        /// The augmentor anounces that it is no longer in use
+        /// </summary>
+        public event EventHandler Disposing;
+
         public abstract Task<UserItem[]> OnOutput();
 
         
@@ -27,6 +32,12 @@ namespace Weniger.UiServices.Augmentors
         public string InputError { get; set; } = null;
 
         internal abstract void PreventExternalDerivation();
+
+        public void Dispose()
+        {
+            if (Disposing != null)
+                Disposing(this, new EventArgs());
+        }
 
         private int _EstimatedCount = 0;
         internal virtual int EstimatedCount

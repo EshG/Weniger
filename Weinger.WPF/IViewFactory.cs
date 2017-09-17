@@ -6,7 +6,7 @@ namespace Weniger.WPF
 {
     public interface IViewFactory
     {
-        Task<ViewData> GetViewData(UserItem[] items);
+        Task<ViewData> GetViewData(UserItem[] items, string contextKey);
     }
 
     public class ViewData
